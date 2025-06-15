@@ -7,6 +7,9 @@ PYTHON ?= python3
 PIP = $(VENV_NAME)/bin/pip
 PYTHON_VENV = $(VENV_NAME)/bin/python
 
+# Project
+PROJECT_VERSION := $(shell python -c "from src.quantum_qpe import __version__; print(__version__)")
+
 help: ## Show this help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
@@ -55,7 +58,7 @@ git-setup: ## Setup git repository
 	@echo "Run: git push -u origin main"
 
 release: ## Create release tag
-	git tag v0.1.0
+	git tag v$(PROJECT_VERSION)
 	@echo "Run: git push --tags"
 
 demo: ## Run QPE demo
